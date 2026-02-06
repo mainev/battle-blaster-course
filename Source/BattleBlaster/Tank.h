@@ -6,12 +6,14 @@
 #include "BasePawn.h"
 
 #include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
+
 
 #include "EnhancedInputSubsystems.h"
-#include "InputMappingContext.h"
 
 #include "Tank.generated.h"
+
+
+class UInputMappingContext;
 
 /**
  * 
@@ -43,5 +45,5 @@ public:
 	USpringArmComponent* SpringArmComp;
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* CameraComp;
+	class UCameraComponent* CameraComp;
 };
