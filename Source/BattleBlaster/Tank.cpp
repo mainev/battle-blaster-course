@@ -3,6 +3,7 @@
 
 #include "Tank.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "InputMappingContext.h"
 
 ATank::ATank()
@@ -21,6 +22,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Add input mapping context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
@@ -53,6 +55,14 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATank::MoveInput()
+void ATank::MoveInput(const FInputActionValue& Value)
 {
+	float InputValue = Value.Get<float>();
+
+	UE_LOG(LogTemp, Display, TEXT("Input Value: %f"), InputValue);
+
+	FVector DeltaLocation = FVector(0.0f, 0.0f, 0.0f);
+	DeltaLocation.X = Speed * InputValue * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+
+	AddActorLocalOffset(DeltaLocation, true);
 }
