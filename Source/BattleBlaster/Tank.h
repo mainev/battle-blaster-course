@@ -15,7 +15,7 @@
 #include "Tank.generated.h"
 
 
-class UInputMappingContext;
+class UCameraComponent;
 
 /**
  * 
@@ -46,14 +46,21 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* TurnAction;
+
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
 
 	UPROPERTY(VisibleAnywhere)
-	class UCameraComponent* CameraComp;
+	UCameraComponent* CameraComp;
 
 	UPROPERTY(EditAnywhere)
 	float Speed = 300.0f;
 
+	UPROPERTY(EditAnywhere)
+	float TurnRate = 50.0f;
+
 	void MoveInput(const FInputActionValue& Value);
+	void TurnInput(const FInputActionValue& Value);
 };
