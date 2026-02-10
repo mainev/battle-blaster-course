@@ -14,17 +14,15 @@
 
 #include "Tank.generated.h"
 
-
 class UCameraComponent;
 
 /**
- * 
+ *
  */
 UCLASS()
 class BATTLEBLASTER_API ATank : public ABasePawn
 {
 	GENERATED_BODY()
-	
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,15 +37,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
 	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputMappingContext* DefaultMappingContext; 
+	class UInputMappingContext* DefaultMappingContext;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MoveAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* TurnAction;
+
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
@@ -61,6 +59,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TurnRate = 50.0f;
 
+	UPROPERTY(EditAnywhere)
+	float BananaCount = 50.0f;
+
+
 	void MoveInput(const FInputActionValue& Value);
 	void TurnInput(const FInputActionValue& Value);
+
 };

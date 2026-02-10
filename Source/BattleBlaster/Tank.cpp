@@ -2,6 +2,7 @@
 
 
 #include "Tank.h"
+
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
 #include "Kismet/GameplayStatics.h"
@@ -15,15 +16,13 @@ ATank::ATank()
 	CameraComp->SetupAttachment(SpringArmComp);
 }
 
-
-
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Add input mapping context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	if (PlayerController)
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
 		{
@@ -33,8 +32,8 @@ void ATank::BeginPlay()
 			}
 		}
 	}
-}
 
+}
 
 // Called every frame
 void ATank::Tick(float DeltaTime)
@@ -49,13 +48,14 @@ void ATank::Tick(float DeltaTime)
 		HitResult.ImpactPoint;
 
 
-	
+
 
 
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.0f, 12, FColor::Red);
-	
-	}
 
+		RotateTurret(HitResult.ImpactPoint);
+
+	}
 }
 
 // Called to bind functionality to input
@@ -63,24 +63,20 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	if (UEnhancedInputComponent* EnhancedPlayerInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedPlayerInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
+		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
 
-		EnhancedPlayerInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &ATank::TurnInput);
+		EIC->BindAction(TurnAction, ETriggerEvent::Triggered, this, &ATank::TurnInput);
 	}
-
 }
 
 void ATank::MoveInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>();
 
-	UE_LOG(LogTemp, Display, TEXT("Input Value: %f"), InputValue);
-
 	FVector DeltaLocation = FVector(0.0f, 0.0f, 0.0f);
 	DeltaLocation.X = Speed * InputValue * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-
 	AddActorLocalOffset(DeltaLocation, true);
 }
 
@@ -93,3 +89,7 @@ void ATank::TurnInput(const FInputActionValue& Value)
 
 	AddActorLocalRotation(DeltaRotation, true);
 }
+
+
+
+

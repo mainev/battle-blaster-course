@@ -6,11 +6,11 @@
 // Sets default values
 ABasePawn::ABasePawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	// set the root component
-	CapsuleComp =  CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComp"));
+	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComp"));
 	SetRootComponent(CapsuleComp);
 
 
@@ -22,5 +22,11 @@ ABasePawn::ABasePawn()
 
 }
 
+void ABasePawn::RotateTurret(FVector LookAtTarget)
+{
+	FVector VectorToTarget = LookAtTarget - TurretMesh->GetComponentLocation();
+	FRotator LookAtRotation = FRotator(0.0f, VectorToTarget.Rotation().Yaw, 0.0f);
 
+	TurretMesh->SetWorldRotation(LookAtRotation);
+}
 
