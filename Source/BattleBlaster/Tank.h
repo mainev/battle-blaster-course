@@ -59,8 +59,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TurnRate = 50.0f;
 
-	UPROPERTY(EditAnywhere)
-	float BananaCount = 50.0f;
 
 
 	void MoveInput(const FInputActionValue& Value);
