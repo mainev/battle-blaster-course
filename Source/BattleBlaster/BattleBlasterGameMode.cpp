@@ -3,3 +3,30 @@
 
 #include "BattleBlasterGameMode.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "Tower.h"
+
+void ABattleBlasterGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TArray<AActor*> Towers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATower::StaticClass(), Towers);
+
+	TowerCount = Towers.Num();
+
+
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+
+	if (PlayerPawn) {
+		Tank = Cast<ATank>(PlayerPawn);
+
+		if (Tank == nullptr) {
+			UE_LOG(LogTemp, Display, TEXT("GameMode: Failed to find the tank actor."));
+		}
+		else {
+			
+		}
+	}
+
+}
