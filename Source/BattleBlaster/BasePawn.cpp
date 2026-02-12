@@ -45,6 +45,9 @@ void ABasePawn::Fire()
 	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 
-	DrawDebugSphere(GetWorld(), SpawnLocation, 25.0f, 12, FColor::Green, false, 3.0f);
+	//DrawDebugSphere(GetWorld(), SpawnLocation, 25.0f, 12, FColor::Green, false, 3.0f);
+
+	// this will create a new actor of class Projectile, using the blueprint
+	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
 }
 
