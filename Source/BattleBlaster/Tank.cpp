@@ -21,7 +21,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
@@ -40,15 +40,11 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController) {
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
 
 		HitResult.ImpactPoint;
-
-
-
 
 
 		//DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.0f, 12, FColor::Red);
@@ -95,6 +91,30 @@ void ATank::TurnInput(const FInputActionValue& Value)
 
 void ATank::HandleDestruction() {
 	Super::HandleDestruction();
+
+	IsAlive = false;
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+	SetPlayerEnabled(false);
+}
+
+void ATank::SetPlayerEnabled(bool Enabled)
+{
+	if (PlayerController)
+	{
+
+		if (Enabled)
+		{
+			EnableInput(PlayerController);
+		}
+		else
+		{
+			DisableInput(PlayerController);
+		}
+
+
+		PlayerController->SetShowMouseCursor(Enabled);
+	}
 }
 
 

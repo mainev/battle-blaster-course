@@ -24,7 +24,7 @@ void ATower::Tick(float DeltaTime)
 void ATower::CheckFireCondition()
 {
 
-	if (IsInFireRange()) {
+	if (Tank->IsAlive && IsInFireRange()) {
 		Fire();
 	}
 }
