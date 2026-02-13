@@ -38,7 +38,7 @@ void ABattleBlasterGameMode::BeginPlay()
 
 					}
 				}
-				
+
 				LoopIndex++;
 			}
 		}
@@ -46,6 +46,26 @@ void ABattleBlasterGameMode::BeginPlay()
 
 
 
-	
 
+
+}
+
+void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
+{
+	if (DeadActor == Tank) {
+		Tank->HandleDestruction();
+	}
+	else {
+		ATower* DeadTower = Cast<ATower>(DeadActor);
+		if (DeadTower)
+		{
+
+			DeadTower->HandleDestruction();
+			TowerCount--;
+
+			if (TowerCount == 0) {
+				// VICTORY!!
+			}
+		}
+	}
 }

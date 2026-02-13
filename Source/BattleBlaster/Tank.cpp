@@ -51,7 +51,7 @@ void ATank::Tick(float DeltaTime)
 
 
 
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.0f, 12, FColor::Red);
+		//DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.0f, 12, FColor::Red);
 
 		RotateTurret(HitResult.ImpactPoint);
 
@@ -92,6 +92,10 @@ void ATank::TurnInput(const FInputActionValue& Value)
 	AddActorLocalRotation(DeltaRotation, true);
 }
 
+
+void ATank::HandleDestruction() {
+	Super::HandleDestruction();
+}
 
 
 

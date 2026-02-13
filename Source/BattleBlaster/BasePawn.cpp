@@ -48,6 +48,14 @@ void ABasePawn::Fire()
 	//DrawDebugSphere(GetWorld(), SpawnLocation, 25.0f, 12, FColor::Green, false, 3.0f);
 
 	// this will create a new actor of class Projectile, using the blueprint
-	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+	if (Projectile) {
+		//this will set owner to either Tank or Tower
+		Projectile->SetOwner(this);
+	}
+}
+
+void ABasePawn::HandleDestruction()
+{
 }
 
