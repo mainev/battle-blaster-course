@@ -34,6 +34,17 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
 
+
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* DeathParticles;
+
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* ExplodeSound;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCameraShakeBase> DeathCameraShakeClass;
+
 	void RotateTurret(FVector LookAtTarget);
 
 	void Fire();
